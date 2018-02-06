@@ -1,0 +1,25 @@
+# .travis
+
+language: php
+dist: trusty
+sudo: false
+
+php:
+  - 7.1
+  - 7.2
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+before_script:
+  - mkdir -p build/logs
+  - travis_retry wget https://scrutinizer-ci.com/ocular.phar
+
+script:
+  - composer install --no-interaction --prefer-dist
+  - vendor/bin/phpunit --configuration="phpunit.xml"
+
+after_script:
+  - php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml
+

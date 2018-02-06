@@ -1,0 +1,4 @@
+# .dockerignore
+*.md
+.env
+.env.dist
